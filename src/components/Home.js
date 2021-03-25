@@ -7,15 +7,17 @@ export default function Home() {
     const idRef = useRef(null)
     const [list, setList] = useState(null)
     const [message, setMessage] = useState(null)
+    let Authorization = `bamba ${localStorage.getItem("token")}`
+    
 
     useEffect(() => {
-        axios.get("/coins").then((response)=>{
+        axios.get("/coins" , {headers: {Authorization}}).then((response)=>{
             setList(response.data.data)
         })
     }, [message])
 
     const submitAdd= () => {
-        axios.post(`/coins/${idRef.current.value}`).then((response)=>{
+        axios.post(`/coins/${idRef.current.value}`, {headers: {Authorization}}).then((response)=>{
             if (!response.data.error){
                 window.location.reload()
             }
@@ -26,7 +28,7 @@ export default function Home() {
     }
 
     const submitUpdate = () => {
-        axios.put(`/coins/${idRef.current.value}`).then((response)=>{
+        axios.put(`/coins/${idRef.current.value}` , {headers: {Authorization}}).then((response)=>{
             if (!response.data.error){
                 window.location.reload()
             }
@@ -38,7 +40,7 @@ export default function Home() {
 
 
     const submitDelete = () => {
-        axios.delete(`/coins/${idRef.current.value}`).then((response)=>{
+        axios.delete(`/coins/${idRef.current.value}`, {headers: {Authorization}}).then((response)=>{
             if (!response.data.error){
                 window.location.reload()
             }
